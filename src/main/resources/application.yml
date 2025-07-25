@@ -1,8 +1,0 @@
-cloud:
-  config:
-    server:
-      git:
-        uri: https://github.com/Song-min-geun/stockproject-config.git
-        default-label: main
-        username: Song-min-geun
-        password: ${GIT_TOKEN}
