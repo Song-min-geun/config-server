@@ -1,0 +1,47 @@
+# -------------------------------------
+# (1) 공통 설정 (기본)
+# -------------------------------------
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+
+# ---  프로필 분리 ---
+
+# -------------------------------------
+# (2) 'local' 프로필: 로컬에서 실행할 때 사용
+# -------------------------------------
+spring:
+  config:
+    activate:
+      on-profile: "local" # 'local' 프로필일 때 활성화
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Song-min-geun/stockproject-config.git
+          default-label: main
+          username: Song-min-geun
+          # 로컬에서는 터미널에 export로 설정한 GIT_TOKEN 값을 사용
+          password: ${GIT_TOKEN}
+
+# --- 프로필 분리 ---
+
+# -------------------------------------
+# (3) 'docker' 프로필: EC2에 배포할 때 사용
+# -------------------------------------
+spring:
+  config:
+    activate:
+      on-profile: "docker" # 'docker' 프로필일 때 활성화
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/Song-min-geun/stockproject-config.git
+          default-label: main
+          username: Song-min-geun
+          # 배포 시에는 GitHub Secrets에 저장된 GIT_TOKEN 값을 주입받음
+          password: ${GIT_TOKEN}

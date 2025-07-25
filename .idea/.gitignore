@@ -9,5 +9,3 @@
 /dataSources/
 /dataSources.local.xml
 
-# 설정 파일
-src/main/resources/application.yml
