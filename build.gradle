@@ -1,0 +1,46 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.0' // 버전을 명시하고 apply false 제거
+    id 'io.spring.dependency-management' version '1.1.7' // 버전을 명시하고 apply false 제거
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT' // 버전 형식 수정
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// Spring Cloud 의존성 버전을 관리하기 위한 설정
+ext {
+    set('springCloudVersion', "2025.0.0")
+}
+
+dependencies {
+    // @SpringBootApplication 에 필요
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // @EnableConfigServer 에 필요
+    implementation 'org.springframework.cloud:spring-cloud-config-server'
+
+    // 테스트 의존성
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+// Spring Cloud BOM(Bill of Materials)을 추가하여 관련 라이브러리 버전 자동 관리
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
